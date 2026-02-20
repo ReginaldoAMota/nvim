@@ -14,7 +14,7 @@ return {
             accept_line = "<M-Down>",
             next = "<M-]>",
             prev = "<M-[>",
-            dismiss = "<M-[>",
+            dismiss = "<C-]>",
           },
         },
         panel = { enabled = false },
