@@ -18,6 +18,8 @@ return {
       vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "Harpoon: arquivo 3" })
       vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end, { desc = "Harpoon: arquivo 4" })
 
+      vim.keymap.set("n", "<leader>hd", function() harpoon:list():remove() end, { desc = "Harpoon: remover" })
+
       -- Navegar na lista (sem conflito com gitsigns <leader>hp)
       vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end, { desc = "Harpoon: próximo" })
       vim.keymap.set("n", "<leader>hN", function() harpoon:list():prev() end, { desc = "Harpoon: anterior" })

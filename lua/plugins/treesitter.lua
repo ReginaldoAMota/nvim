@@ -4,9 +4,6 @@ return {
     branch = "master",
     lazy = false,
     build = ":TSUpdate",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
@@ -14,7 +11,7 @@ return {
           "lua", "go", "rust",
           "html", "css",
           "markdown", "markdown_inline",
-          "xml", "yaml", "json",
+          "xml", "yaml", "json", "prisma"
         },
         sync_install = false,
         auto_install = true,
@@ -28,35 +25,35 @@ return {
             node_decremental = "<bs>",
           },
         },
-        textobjects = {
-          select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-              ["af"] = "@function.outer",
-              ["if"] = "@function.inner",
-              ["ac"] = "@class.outer",
-              ["ic"] = "@class.inner",
-              ["aa"] = "@parameter.outer",
-              ["ia"] = "@parameter.inner",
-              ["ab"] = "@block.outer",
-              ["ib"] = "@block.inner",
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true,
-            goto_next_start = {
-              ["]f"] = "@function.outer",
-              ["]c"] = "@class.outer",
-            },
-            goto_previous_start = {
-              ["[f"] = "@function.outer",
-              ["[c"] = "@class.outer",
-            },
-          },
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("nvim-treesitter-textobjects").setup({
+        select = {
+          lookahead = true,
         },
       })
+
+      local select = function(query)
+        return function()
+          require("nvim-treesitter-textobjects.select").select_textobject(query, "textobjects")
+        end
+      end
+
+      -- Select: funções, classes, parâmetros, blocos
+      vim.keymap.set({ "x", "o" }, "af", select("@function.outer"))
+      vim.keymap.set({ "x", "o" }, "if", select("@function.inner"))
+      vim.keymap.set({ "x", "o" }, "ac", select("@class.outer"))
+      vim.keymap.set({ "x", "o" }, "ic", select("@class.inner"))
+      vim.keymap.set({ "x", "o" }, "aa", select("@parameter.outer"))
+      vim.keymap.set({ "x", "o" }, "ia", select("@parameter.inner"))
+      vim.keymap.set({ "x", "o" }, "ab", select("@block.outer"))
+      vim.keymap.set({ "x", "o" }, "ib", select("@block.inner"))
     end,
   },
 }

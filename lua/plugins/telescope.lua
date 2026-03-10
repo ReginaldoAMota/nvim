@@ -36,7 +36,7 @@ return {
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Ajuda" })
       vim.keymap.set("n", "<leader>fs", builtin.grep_string, { desc = "Buscar palavra atual" })
       vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Arquivos recentes" })
-      vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Diagnósticos" })
+      vim.keymap.set("n", "<leader>fd", function() builtin.diagnostics({ bufnr = 0 }) end, { desc = "Diagnósticos (arquivo atual)" })
     end,
   },
 }

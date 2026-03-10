@@ -1,4 +1,5 @@
 local map = vim.keymap.set
+local utils = require("config.utils")
 
 -- Explorador de arquivos
 map("n", "<leader>pv", vim.cmd.Ex)
@@ -40,3 +41,6 @@ map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Tornar arquivo executável
 map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+
+
+map("n", "<leader>rt", utils.run_file_on_terminal, { desc = "Run current file" })

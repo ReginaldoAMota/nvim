@@ -16,6 +16,7 @@ return {
         { "<leader>c", group = "código" },
         { "<leader>w", group = "workspace" },
         { "<leader>d", group = "diagnóstico" },
+        { "<leader>b", group = "debug" },
       })
     end,
   },
