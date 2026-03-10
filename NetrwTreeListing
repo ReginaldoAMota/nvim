@@ -1,0 +1,29 @@
+../
+nvim/
+| .claude/
+| .git/
+| lua/
+| | config/
+| | plugins/
+| | | autopairs.lua
+| | | cmp.lua
+| | | colorscheme.lua
+| | | conform.lua
+| | | copilot.lua
+| | | debug.lua
+| | | flash.lua
+| | | folding.lua
+| | | git.lua
+| | | harpoon.lua
+| | | lint.lua
+| | | lsp.lua
+| | | lualine.lua
+| | | markview.lua
+| | | mini.lua
+| | | smear.lua
+| | | telescope.lua
+| | | tmux.lua
+| | | treesitter.lua
+| | | which-key.lua
+| init.lua
+| lazy-lock.json
