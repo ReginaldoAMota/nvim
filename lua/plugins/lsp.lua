@@ -69,6 +69,9 @@ return {
           "marksman",
           "lemminx",
           "yamlls",
+          "jsonls",
+          "kotlin_language_server",
+          "flutter_analyzer",
         },
         automatic_enable = true,
       })

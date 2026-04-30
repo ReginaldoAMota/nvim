@@ -11,7 +11,8 @@ return {
           "lua", "go", "rust",
           "html", "css",
           "markdown", "markdown_inline",
-          "xml", "yaml", "json", "prisma"
+          "xml", "yaml", "json", "prisma", "kotlin",
+          "dart"
         },
         sync_install = false,
         auto_install = true,

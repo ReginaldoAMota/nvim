@@ -2,7 +2,7 @@ local map = vim.keymap.set
 local utils = require("config.utils")
 
 -- Explorador de arquivos
-map("n", "<leader>pv", vim.cmd.Ex)
+-- map("n", "<leader>pv", vim.cmd.Ex)
 
 -- Mover linhas selecionadas
 map("v", "J", ":m '>+1<CR>gv=gv")

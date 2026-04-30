@@ -9,24 +9,24 @@ return {
       "Weissle/persistent-breakpoints.nvim",
     },
     keys = {
-      { "<leader>bb", function() require("persistent-breakpoints.api").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-      { "<leader>bB", function() require("persistent-breakpoints.api").set_conditional_breakpoint() end, desc = "Breakpoint condicional" },
+      { "<leader>bb", function() require("persistent-breakpoints.api").toggle_breakpoint() end,           desc = "Toggle breakpoint" },
+      { "<leader>bB", function() require("persistent-breakpoints.api").set_conditional_breakpoint() end,  desc = "Breakpoint condicional" },
       { "<leader>bl", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Mensagem: ")) end, desc = "Log point" },
-      { "<leader>bx", function() require("persistent-breakpoints.api").clear_all_breakpoints() end, desc = "Limpar breakpoints" },
-      { "<leader>bc", function() require("dap").continue() end, desc = "Continuar / iniciar" },
-      { "<leader>bi", function() require("dap").step_into() end, desc = "Step into" },
-      { "<leader>bo", function() require("dap").step_over() end, desc = "Step over" },
-      { "<leader>bO", function() require("dap").step_out() end, desc = "Step out" },
-      { "<leader>bq", function() require("dap").terminate() end, desc = "Encerrar sessão" },
-      { "<leader>br", function() require("dap").restart() end, desc = "Reiniciar sessão" },
-      { "<leader>bu", function() require("dapui").toggle() end, desc = "Toggle DAP UI" },
-      { "<leader>be", function() require("dapui").eval() end, desc = "Avaliar expressão", mode = { "n", "v" } },
-      { "<leader>bR", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
-      { "<leader>bL", function() require("dap").run_last() end, desc = "Executar último" },
-      { "<F5>", function() require("dap").continue() end, desc = "Debug: Continuar" },
-      { "<F10>", function() require("dap").step_over() end, desc = "Debug: Step over" },
-      { "<F11>", function() require("dap").step_into() end, desc = "Debug: Step into" },
-      { "<F12>", function() require("dap").step_out() end, desc = "Debug: Step out" },
+      { "<leader>bx", function() require("persistent-breakpoints.api").clear_all_breakpoints() end,       desc = "Limpar breakpoints" },
+      { "<leader>bc", function() require("dap").continue() end,                                           desc = "Continuar / iniciar" },
+      { "<leader>bi", function() require("dap").step_into() end,                                          desc = "Step into" },
+      { "<leader>bo", function() require("dap").step_over() end,                                          desc = "Step over" },
+      { "<leader>bO", function() require("dap").step_out() end,                                           desc = "Step out" },
+      { "<leader>bq", function() require("dap").terminate() end,                                          desc = "Encerrar sessão" },
+      { "<leader>br", function() require("dap").restart() end,                                            desc = "Reiniciar sessão" },
+      { "<leader>bu", function() require("dapui").toggle() end,                                           desc = "Toggle DAP UI" },
+      { "<leader>be", function() require("dapui").eval() end,                                             desc = "Avaliar expressão",     mode = { "n", "v" } },
+      { "<leader>bR", function() require("dap").repl.toggle() end,                                        desc = "Toggle REPL" },
+      { "<leader>bL", function() require("dap").run_last() end,                                           desc = "Executar último" },
+      { "<F5>",       function() require("dap").continue() end,                                           desc = "Debug: Continuar" },
+      { "<F10>",      function() require("dap").step_over() end,                                          desc = "Debug: Step over" },
+      { "<F11>",      function() require("dap").step_into() end,                                          desc = "Debug: Step into" },
+      { "<F12>",      function() require("dap").step_out() end,                                           desc = "Debug: Step out" },
     },
     cmd = { "DapContinue", "DapToggleBreakpoint" },
     config = function()
@@ -59,7 +59,7 @@ return {
       end
 
       -- Ícones de breakpoint
-      vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError" })
+      vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticError" })
       vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticWarn" })
       vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo" })
       vim.fn.sign_define("DapStopped", { text = "→", texthl = "DiagnosticOk", linehl = "DapStoppedLine" })
