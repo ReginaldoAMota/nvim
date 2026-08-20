@@ -78,6 +78,7 @@ return {
           "kotlin_language_server",
           "flutter_analyzer",
           "asm_lsp",
+          "ktfmt"
         },
         automatic_enable = true,
       })
