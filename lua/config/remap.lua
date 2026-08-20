@@ -44,3 +44,4 @@ map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 
 map("n", "<leader>rt", utils.run_file_on_terminal, { desc = "Run current file" })
+map("n", "<leader>rb", utils.build_asm_file, { desc = "Build arquivo asm (nasm + ld)" })

@@ -7,6 +7,8 @@ return {
 
       lint.linters_by_ft = {
         lua = { "luacheck" },
+        c = { "clangtidy" },
+        cpp = { "clangtidy" },
       }
 
       -- Configurar luacheck para reconhecer globals do Neovim

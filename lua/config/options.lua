@@ -19,6 +19,15 @@ opt.incsearch = true
 opt.ignorecase = true
 opt.smartcase = true
 
+-- Mostra caracteres invisíveis: pontos na indentação (tab/espaços) e espaços em branco no fim da linha
+opt.list = true
+opt.listchars = {
+  tab = "› ",
+  trail = "·",
+  nbsp = "␣",
+  leadmultispace = "· ",
+}
+
 opt.termguicolors = true
 opt.scrolloff = 8
 opt.signcolumn = "yes"

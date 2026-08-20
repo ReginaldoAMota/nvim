@@ -7,12 +7,11 @@ return {
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
-          "javascript", "typescript", "tsx",
-          "lua", "go", "rust",
+          "javascript", "typescript", "tsx", "c", "cpp", "vimdoc", "vim", "query", "lua", "go", "rust",
           "html", "css",
           "markdown", "markdown_inline",
           "xml", "yaml", "json", "prisma", "kotlin",
-          "dart"
+          "dart", "asm", "bash", "make"
         },
         sync_install = false,
         auto_install = true,

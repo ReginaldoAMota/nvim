@@ -151,6 +151,33 @@ return {
       for _, lang in ipairs({ "javascript", "typescript", "javascriptreact", "typescriptreact" }) do
         dap.configurations[lang] = js_configs
       end
+
+      -- C/C++ (codelldb via Mason)
+      local codelldb_path = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/adapter/codelldb"
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = codelldb_path,
+          args = { "--port", "${port}" },
+        },
+      }
+
+      local c_cpp_config = {
+        {
+          name = "Executar arquivo compilado",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Caminho do executável: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
+
+      dap.configurations.c = c_cpp_config
+      dap.configurations.cpp = c_cpp_config
     end,
   },
 }

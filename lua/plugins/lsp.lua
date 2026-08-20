@@ -55,6 +55,12 @@ return {
         },
       })
 
+      -- Config específica do asm_lsp
+      vim.lsp.config("asm_lsp", {
+        cmd = { "asm-lsp" },
+        filetypes = { "asm", "s", "S" },
+      })
+
       -- Mason
       require("mason").setup({ ui = { border = "rounded" } })
 
@@ -64,6 +70,7 @@ return {
           "ts_ls",
           "gopls",
           "rust_analyzer",
+          "clangd",
           "html",
           "cssls",
           "marksman",
@@ -72,6 +79,7 @@ return {
           "jsonls",
           "kotlin_language_server",
           "flutter_analyzer",
+          "asm_lsp",
         },
         automatic_enable = true,
       })
