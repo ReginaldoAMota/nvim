@@ -17,6 +17,8 @@ map("n", "N", "Nzzzv")
 -- Colar sem perder o registro
 map("x", "<leader>p", [["_dP]])
 
+map("n", "<leader>m", [[@]])
+
 -- Copiar para clipboard do sistema
 map({ "n", "v" }, "<leader>y", [["+y]])
 map("n", "<leader>Y", [["+Y]])
@@ -41,7 +43,6 @@ map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Tornar arquivo executável
 map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
 
 map("n", "<leader>rt", utils.run_file_on_terminal, { desc = "Run current file" })
 map("n", "<leader>rb", utils.build_asm_file, { desc = "Build arquivo asm (nasm + ld)" })
