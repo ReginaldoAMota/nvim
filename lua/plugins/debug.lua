@@ -9,24 +9,133 @@ return {
       "Weissle/persistent-breakpoints.nvim",
     },
     keys = {
-      { "<leader>bb", function() require("persistent-breakpoints.api").toggle_breakpoint() end,           desc = "Toggle breakpoint" },
-      { "<leader>bB", function() require("persistent-breakpoints.api").set_conditional_breakpoint() end,  desc = "Breakpoint condicional" },
-      { "<leader>bl", function() require("dap").set_breakpoint(nil, nil, vim.fn.input("Mensagem: ")) end, desc = "Log point" },
-      { "<leader>bx", function() require("persistent-breakpoints.api").clear_all_breakpoints() end,       desc = "Limpar breakpoints" },
-      { "<leader>bc", function() require("dap").continue() end,                                           desc = "Continuar / iniciar" },
-      { "<leader>bi", function() require("dap").step_into() end,                                          desc = "Step into" },
-      { "<leader>bo", function() require("dap").step_over() end,                                          desc = "Step over" },
-      { "<leader>bO", function() require("dap").step_out() end,                                           desc = "Step out" },
-      { "<leader>bq", function() require("dap").terminate() end,                                          desc = "Encerrar sessão" },
-      { "<leader>br", function() require("dap").restart() end,                                            desc = "Reiniciar sessão" },
-      { "<leader>bu", function() require("dapui").toggle() end,                                           desc = "Toggle DAP UI" },
-      { "<leader>be", function() require("dapui").eval() end,                                             desc = "Avaliar expressão",     mode = { "n", "v" } },
-      { "<leader>bR", function() require("dap").repl.toggle() end,                                        desc = "Toggle REPL" },
-      { "<leader>bL", function() require("dap").run_last() end,                                           desc = "Executar último" },
-      { "<F5>",       function() require("dap").continue() end,                                           desc = "Debug: Continuar" },
-      { "<F10>",      function() require("dap").step_over() end,                                          desc = "Debug: Step over" },
-      { "<F11>",      function() require("dap").step_into() end,                                          desc = "Debug: Step into" },
-      { "<F12>",      function() require("dap").step_out() end,                                           desc = "Debug: Step out" },
+      {
+        "<leader>bb",
+        function()
+          require("persistent-breakpoints.api").toggle_breakpoint()
+        end,
+        desc = "Toggle breakpoint",
+      },
+      {
+        "<leader>bB",
+        function()
+          require("persistent-breakpoints.api").set_conditional_breakpoint()
+        end,
+        desc = "Breakpoint condicional",
+      },
+      {
+        "<leader>bl",
+        function()
+          require("dap").set_breakpoint(nil, nil, vim.fn.input("Mensagem: "))
+        end,
+        desc = "Log point",
+      },
+      {
+        "<leader>bx",
+        function()
+          require("persistent-breakpoints.api").clear_all_breakpoints()
+        end,
+        desc = "Limpar breakpoints",
+      },
+      {
+        "<leader>bc",
+        function()
+          require("dap").continue()
+        end,
+        desc = "Continuar / iniciar",
+      },
+      {
+        "<leader>bi",
+        function()
+          require("dap").step_into()
+        end,
+        desc = "Step into",
+      },
+      {
+        "<leader>bo",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "Step over",
+      },
+      {
+        "<leader>bO",
+        function()
+          require("dap").step_out()
+        end,
+        desc = "Step out",
+      },
+      {
+        "<leader>bq",
+        function()
+          require("dap").terminate()
+        end,
+        desc = "Encerrar sessão",
+      },
+      {
+        "<leader>br",
+        function()
+          require("dap").restart()
+        end,
+        desc = "Reiniciar sessão",
+      },
+      {
+        "<leader>bu",
+        function()
+          require("dapui").toggle()
+        end,
+        desc = "Toggle DAP UI",
+      },
+      {
+        "<leader>be",
+        function()
+          require("dapui").eval()
+        end,
+        desc = "Avaliar expressão",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>bR",
+        function()
+          require("dap").repl.toggle()
+        end,
+        desc = "Toggle REPL",
+      },
+      {
+        "<leader>bL",
+        function()
+          require("dap").run_last()
+        end,
+        desc = "Executar último",
+      },
+      {
+        "<F5>",
+        function()
+          require("dap").continue()
+        end,
+        desc = "Debug: Continuar",
+      },
+      {
+        "<F10>",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "Debug: Step over",
+      },
+      {
+        "<F11>",
+        function()
+          require("dap").step_into()
+        end,
+        desc = "Debug: Step into",
+      },
+      {
+        "<F12>",
+        function()
+          require("dap").step_out()
+        end,
+        desc = "Debug: Step out",
+      },
     },
     cmd = { "DapContinue", "DapToggleBreakpoint" },
     config = function()
@@ -163,6 +272,25 @@ return {
         },
       }
 
+      local function build_and_debug_c(compiler)
+        return function()
+          local src = vim.fn.expand("%:p")
+          local out = vim.fn.expand("%:p:r")
+          local cmd = string.format("%s -g -O0 -o %s %s", compiler, vim.fn.shellescape(out), vim.fn.shellescape(src))
+          local result = vim.fn.system(cmd)
+          if vim.v.shell_error ~= 0 then
+            vim.notify("Erro ao compilar (" .. compiler .. "):\n" .. result, vim.log.levels.ERROR)
+            return dap.ABORT
+          end
+          return out
+        end
+      end
+
+      local function program_args()
+        local args_str = vim.fn.input("Argumentos do programa: ")
+        return vim.split(args_str, " +", { trimempty = true })
+      end
+
       local c_cpp_config = {
         {
           name = "Executar arquivo compilado",
@@ -176,8 +304,81 @@ return {
         },
       }
 
-      dap.configurations.c = c_cpp_config
-      dap.configurations.cpp = c_cpp_config
+      dap.configurations.c = {
+        {
+          name = "Compilar (gcc) e depurar arquivo atual",
+          type = "codelldb",
+          request = "launch",
+          program = build_and_debug_c("gcc"),
+          args = program_args,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+        unpack(c_cpp_config),
+      }
+
+      dap.configurations.cpp = {
+        {
+          name = "Compilar (g++) e depurar arquivo atual",
+          type = "codelldb",
+          request = "launch",
+          program = build_and_debug_c("g++"),
+          args = program_args,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+        unpack(c_cpp_config),
+      }
+
+      -- Assembly (GDB nativo com --interpreter=dap, disponível desde o GDB 14.1)
+      -- O GDB expõe os registradores da CPU como um scope "Registers" no DAP,
+      -- que aparece automaticamente no painel "Scopes" da dapui.
+      dap.adapters.gdb = {
+        id = "gdb",
+        type = "executable",
+        command = "gdb",
+        args = { "--quiet", "--nx", "--interpreter=dap" },
+      }
+
+      local function build_and_debug_asm()
+        local src = vim.fn.expand("%:p")
+        local out = vim.fn.expand("%:p:r")
+        local obj = out .. ".o"
+        local build_cmd = string.format(
+          "nasm -f elf64 -g -F dwarf %s -o %s && ld %s -o %s",
+          vim.fn.shellescape(src),
+          vim.fn.shellescape(obj),
+          vim.fn.shellescape(obj),
+          vim.fn.shellescape(out)
+        )
+        local result = vim.fn.system(build_cmd)
+        if vim.v.shell_error ~= 0 then
+          vim.notify("Erro ao montar/linkar (nasm/ld):\n" .. result, vim.log.levels.ERROR)
+          return dap.ABORT
+        end
+        return out
+      end
+
+      dap.configurations.asm = {
+        {
+          name = "Montar (nasm) e depurar",
+          type = "gdb",
+          request = "launch",
+          program = build_and_debug_asm,
+          stopOnEntry = true,
+          cwd = "${workspaceFolder}",
+        },
+        {
+          name = "Depurar executável existente",
+          type = "gdb",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Caminho do executável: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          stopOnEntry = true,
+          cwd = "${workspaceFolder}",
+        },
+      }
     end,
   },
 }

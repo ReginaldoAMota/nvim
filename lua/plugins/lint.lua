@@ -9,13 +9,19 @@ return {
         lua = { "luacheck" },
         c = { "clangtidy" },
         cpp = { "clangtidy" },
+        javascript = { "eslint_d" },
+        javascriptreact = { "eslint_d" },
+        typescript = { "eslint_d" },
+        typescriptreact = { "eslint_d" },
       }
 
       -- Configurar luacheck para reconhecer globals do Neovim
       lint.linters.luacheck.args = {
-        "--globals", "vim",
+        "--globals",
+        "vim",
         "--no-unused-args",
-        "--formatter", "plain",
+        "--formatter",
+        "plain",
         "--codes",
         "--ranges",
         "-",

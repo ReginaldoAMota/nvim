@@ -2,9 +2,27 @@ return {
   {
     "folke/snacks.nvim",
     keys = {
-      { "<leader>gs", function() Snacks.lazygit() end, desc = "Lazygit" },
-      { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit log" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit log (arquivo atual)" },
+      {
+        "<leader>gs",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "Lazygit",
+      },
+      {
+        "<leader>gl",
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = "Lazygit log",
+      },
+      {
+        "<leader>gf",
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = "Lazygit log (arquivo atual)",
+      },
     },
     opts = {
       lazygit = {},

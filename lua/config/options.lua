@@ -11,7 +11,7 @@ opt.smartindent = true
 opt.wrap = false
 opt.swapfile = false
 opt.backup = false
-opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undodir = vim.fn.stdpath("state") .. "/undo"
 opt.undofile = true
 
 opt.hlsearch = false
@@ -23,23 +23,21 @@ opt.smartcase = true
 opt.list = true
 opt.listchars = {
   tab = "› ",
-  trail = "·",
+  trail = "",
   nbsp = "␣",
-  leadmultispace = "· ",
+  leadmultispace = " ",
 }
 
 opt.termguicolors = true
+-- Mesma fonte do kitty (kitty.conf: font_family/font_size). Só tem efeito em
+-- clientes GUI (Neovide etc.); no terminal quem desenha os glifos é o kitty.
+opt.guifont = "Terminess Nerd Font Mono:h12"
 opt.scrolloff = 8
 opt.signcolumn = "yes"
 opt.updatetime = 50
 opt.colorcolumn = "80"
 opt.splitright = true
 opt.splitbelow = true
-
--- Netrw (explorador de arquivos nativo)
-vim.g.netrw_banner = 0        -- remove o banner de comandos do topo
-vim.g.netrw_liststyle = 3     -- estilo árvore
-vim.g.netrw_sizestyle = "H"   -- tamanhos legíveis (KB, MB)
 
 -- Folding via treesitter (gerenciado pelo nvim-ufo)
 opt.foldcolumn = "1"

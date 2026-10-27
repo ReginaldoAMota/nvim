@@ -31,10 +31,7 @@ function M.build_asm_file()
   local filename = vim.fn.expand("%:p")
   local basename = vim.fn.expand("%:p:r")
 
-  local cmd = string.format(
-    "nasm -f elf64 %s -o %s.o && ld %s.o -o %s",
-    filename, basename, basename, basename
-  )
+  local cmd = string.format("nasm -f elf64 %s -o %s.o && ld %s.o -o %s", filename, basename, basename, basename)
 
   vim.fn.jobstart(cmd, {
     stdout_buffered = true,
