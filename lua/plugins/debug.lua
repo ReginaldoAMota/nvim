@@ -209,7 +209,7 @@ return {
       -- Node.js / TypeScript (js-debug-adapter via Mason)
       dap.adapters["pwa-node"] = {
         type = "server",
-        host = "localhost",
+        host = "::1", -- js-debug-adapter só escuta em IPv6; "localhost" pode resolver para 127.0.0.1 e travar o attach
         port = "${port}",
         executable = {
           command = "js-debug-adapter",
